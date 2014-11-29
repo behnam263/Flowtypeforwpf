@@ -1,0 +1,27 @@
+ <TextBox x:Name="textbox1" TextWrapping="Wrap" Text="TextBox"  Margin="0,0,0,269" />
+       
+       //min size for textbox font(it is input)
+       double minfontsize = 12;
+       
+       //these are values for calculation
+        double maximum = 9999;
+        double minimum = 1;
+        double maxFont = 9999;
+        double minFont = 1;
+        double fontRatio = 35;
+
+        //Calculate font size
+        public double changes( TextBox el)
+        {
+            double elw = Math.Min(el.ActualWidth, el.ActualHeight);
+            double width = (elw > maximum) ? maximum : elw < minimum ? minimum : elw;
+            double fontBase = width / fontRatio;
+            double result = (fontBase < minFont) ? minFont : fontBase;
+            return ((fontBase > maxFont) ? maxFont : result) * minfontsize;
+        }
+
+       // You should attach this event to the textbox that you want to change textsize
+        private void textbox1_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            textbox1.FontSize = changes(textbox1);
+        }
